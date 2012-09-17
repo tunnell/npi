@@ -1,21 +1,20 @@
-from setuptools import setup
 try:
-    from shrinkwrap.install import AutoconfInstall
+    from shrinkwrap.install import ShrinkwrapInstall
 except ImportError:
-    AutoconfInstall = object
+    import subprocess; subprocess.check_call('pip install shrinkwrap', shell=True)
+    from shrinkwrap.install import ShrinkwrapInstall
+from setuptools import setup
 
 
-class Install(AutoconfInstall):
-    version = '2012.08.22'
-    date = version.replace('.', '')
-    source_url = "http://ftp.gnu.org/gnu/parallel/parallel-%s.tar.bz2" % date
+version = '2012.08.22'
+date = version.replace('.', '')
 
 setup(
     name='gnu_parallel',
-    version=Install.version,
+    version=version,
     author='Stan Seibert',
     author_email='stan@mtrr.org',
-    setup_requires=['shrinkwrap'],
-    install_requires=['shrinkwrap'],
-    cmdclass={'install': Install},
+    shrinkwrap_installer='autoconf',
+    shrinkwrap_source_url="http://ftp.gnu.org/gnu/parallel/parallel-%s.tar.bz2" % date,
+    cmdclass={'install': ShrinkwrapInstall},
 )

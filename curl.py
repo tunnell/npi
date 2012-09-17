@@ -1,20 +1,19 @@
-from setuptools import setup
 try:
-    from shrinkwrap.install import AutoconfInstall
+    from shrinkwrap.install import ShrinkwrapInstall
 except ImportError:
-    AutoconfInstall = object
+    import subprocess; subprocess.check_call('pip install shrinkwrap', shell=True)
+    from shrinkwrap.install import ShrinkwrapInstall
+from setuptools import setup
 
 
-class Install(AutoconfInstall):
-    version = '7.27.0'
-    source_url = 'http://curl.haxx.se/download/curl-%s.tar.bz2' % version
+version = '7.27.0'
 
 setup(
     name='curl',
-    version=Install.version,
+    version=version,
     author='Stan Seibert',
     author_email='stan@mtrr.org',
-    setup_requires=['shrinkwrap'],
-    install_requires=['shrinkwrap'],
-    cmdclass={'install': Install},
+    shrinkwrap_installer='autoconf',
+    shrinkwrap_source_url='http://curl.haxx.se/download/curl-%s.tar.bz2' % version,
+    cmdclass={'install': ShrinkwrapInstall},
 )
