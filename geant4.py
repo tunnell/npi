@@ -28,7 +28,12 @@ def installer(self):
     self.make(extra_opts=['install'])
 
     # Setup environment
-    env_contents = 'source %s' % os.path.join(self.virtualenv, 'bin', 'geant4.sh')
+    env_contents = '''
+pushd .  > /dev/null
+cd %s
+source geant4.sh
+popd  > /dev/null
+''' % os.path.join(self.virtualenv, 'bin')
     self.install_env('geant4.sh', contents=env_contents)
 
 setup(
