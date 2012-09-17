@@ -14,7 +14,7 @@ source_url = 'https://bitbucket.org/seibert/g4py#geant4.9.5.p01'
 def installer(self):
     # Get source and unpack to $VIRTUAL_ENV/src
     os.chdir(self.src_dir)
-    self.shell('hg clone ' + self.source_url)
+    self.shell('hg clone ' + source_url)
     os.chdir('g4py')
     os.environ['CLHEP_BASE_DIR'] = self.virtualenv
     system = platform.system()
