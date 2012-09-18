@@ -1,7 +1,7 @@
 try:
     from shrinkwrap.install import ShrinkwrapInstall
 except ImportError:
-    import subprocess; subprocess.check_call('pip install shrinkwrap', shell=True)
+    import subprocess; subprocess.check_call('pip install -b $VIRTUAL_ENV/build/build-shrinkwrap shrinkwrap', shell=True)
     from shrinkwrap.install import ShrinkwrapInstall
 from setuptools import setup
 import os
@@ -15,7 +15,7 @@ def installer(self):
 
     # Create build directory
     os.chdir(self.src_dir)
-    g4src_dir = os.path.realpath('geant' + self.version)
+    g4src_dir = os.path.realpath('geant' + version)
     build_dir = g4src_dir + '-build'
     if not os.path.exists(build_dir):
         os.mkdir(build_dir)
