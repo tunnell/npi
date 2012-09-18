@@ -1,7 +1,7 @@
 try:
     from shrinkwrap.install import ShrinkwrapInstall
 except ImportError:
-    import subprocess; subprocess.check_call('pip install shrinkwrap', shell=True)
+    import subprocess; subprocess.check_call('pip install -b $VIRTUAL_ENV/build/build-shrinkwrap shrinkwrap', shell=True)
     from shrinkwrap.install import ShrinkwrapInstall
 from setuptools import setup
 
