@@ -11,20 +11,20 @@ import platform
 version = '0.1'
 source_url = 'https://deapclean.org/svn/priv/rat'
 
-def installer(self):
+def installer(inst):
     # Get source and unpack to $VIRTUAL_ENV/src
-    os.chdir(self.src_dir)
-    self.shell('svn co ' + source_url)
+    os.chdir(inst.src_dir)
+    inst.shell('svn co ' + source_url)
     os.chdir('rat')
 
     config_cmd = './configure'
-    self.shell(config_cmd)
+    inst.shell(config_cmd)
 
     # Install environment file to be used in future calls
-    env_contents = 'source %s\n' % os.path.join(self.src_dir, 'rat', 'env.sh')
-    self.install_env('rat.sh', contents=env_contents)
+    env_contents = 'source %s\n' % os.path.join(inst.src_dir, 'rat', 'env.sh')
+    inst.install_env('rat.sh', contents=env_contents)
 
-    self.shell('scons -j%d' % self.ncpu)
+    inst.shell('scons -j%d' % inst.ncpu)
 
 
 setup(

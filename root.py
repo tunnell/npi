@@ -11,24 +11,24 @@ version = '5.34.01'
 source_url = 'ftp://root.cern.ch/root/root_v%s.source.tar.gz' % version
 
 
-def installer(self):
+def installer(inst):
     # Get source and unpack to $VIRTUAL_ENV/src
-    self.download_and_unpack_tarball(source_url, to_src_dir=True)
+    inst.download_and_unpack_tarball(source_url, to_src_dir=True)
 
     # Fix source directory name
-    os.chdir(self.src_dir)
+    os.chdir(inst.src_dir)
     root_dir = 'root-v' + version
     os.rename('root', root_dir)
 
     # Configure and compile in place
     os.chdir(root_dir)
-    config_options = '--enable-minuit2 --enable-roofit --with-python-libdir=%s' % self.python_libdir
-    self.shell('./configure ' + config_options)
-    self.make()
+    config_options = '--enable-minuit2 --enable-roofit --with-python-libdir=%s' % inst.python_libdir
+    inst.shell('./configure ' + config_options)
+    inst.make()
 
     # Setup environment
-    env_contents = 'source %s' % os.path.join(self.src_dir, root_dir, 'bin', 'thisroot.sh')
-    self.install_env('root.sh', contents=env_contents)
+    env_contents = 'source %s' % os.path.join(inst.src_dir, root_dir, 'bin', 'thisroot.sh')
+    inst.install_env('root.sh', contents=env_contents)
 
 
 setup(

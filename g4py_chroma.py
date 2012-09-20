@@ -11,12 +11,12 @@ import platform
 version = '4.9.5.p01'
 source_url = 'https://bitbucket.org/seibert/g4py#geant4.9.5.p01'
 
-def installer(self):
+def installer(inst):
     # Get source and unpack to $VIRTUAL_ENV/src
-    os.chdir(self.src_dir)
-    self.shell('hg clone ' + source_url)
+    os.chdir(inst.src_dir)
+    inst.shell('hg clone ' + source_url)
     os.chdir('g4py')
-    os.environ['CLHEP_BASE_DIR'] = self.virtualenv
+    os.environ['CLHEP_BASE_DIR'] = inst.virtualenv
     system = platform.system()
     bits = platform.architecture()[0]
     
@@ -30,16 +30,16 @@ def installer(self):
     python_version = '.'.join(platform.python_version_tuple()[:2])
     config_cmd = './configure %s --prefix=%s --with-g4-incdir=%s --with-g4-libdir=%s --libdir=%s --with-python-incdir=%s --with-python-libdir=%s --with-boost-incdir=%s --with-boost-libdir=%s' % \
         (platform_string, 
-         self.virtualenv,
-         os.path.join(self.virtualenv, 'include', 'Geant4'), 
-         os.path.join(self.virtualenv, 'lib'),
-         os.path.join(self.virtualenv, 'lib', 'python'+python_version, 'site-packages'),
-         os.path.join(self.virtualenv, 'include', 'python'+python_version),
-         self.python_libdir,
-         os.path.join(self.virtualenv, 'include'),
-         os.path.join(self.virtualenv, 'lib'))
-    self.shell(config_cmd)
-    self.make(extra_opts=['install'])
+         inst.virtualenv,
+         os.path.join(inst.virtualenv, 'include', 'Geant4'), 
+         os.path.join(inst.virtualenv, 'lib'),
+         os.path.join(inst.virtualenv, 'lib', 'python'+python_version, 'site-packages'),
+         os.path.join(inst.virtualenv, 'include', 'python'+python_version),
+         inst.python_libdir,
+         os.path.join(inst.virtualenv, 'include'),
+         os.path.join(inst.virtualenv, 'lib'))
+    inst.shell(config_cmd)
+    inst.make(extra_opts=['install'])
 
 
 setup(

@@ -10,17 +10,17 @@ import os
 version = '2.8.9'
 source_url = "http://www.cmake.org/files/v2.8/cmake-%s.tar.gz" % version
 
-def installer(self):
-    self.download_and_unpack_tarball(source_url)
+def installer(inst):
+    inst.download_and_unpack_tarball(source_url)
     # Remove .tar and .gz
     basename, ext = os.path.splitext(os.path.basename(source_url))
     basename, ext = os.path.splitext(basename)
-    self.build_dir = basename
+    inst.build_dir = basename
 
-    os.chdir(self.build_dir)
-    self.shell('./bootstrap --prefix=' + self.virtualenv)
-    self.make()
-    self.make(extra_opts=['install'])
+    os.chdir(inst.build_dir)
+    inst.shell('./bootstrap --prefix=' + inst.virtualenv)
+    inst.make()
+    inst.make(extra_opts=['install'])
 
 setup(
     name='cmake',
